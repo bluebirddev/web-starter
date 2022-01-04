@@ -8,5 +8,8 @@
     "prettier.tabWidth": 2,
     "prettier.singleQuote": true,
     "prettier.printWidth": 120,
-    "prettier.endOfLine": "auto"
+    "prettier.endOfLine": "auto",
+    "files.associations": {
+        "*.css": "postcss"
+     }
 }
