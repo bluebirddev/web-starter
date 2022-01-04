@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "web-starter",
   "private": true,
   "scripts": {
     "dev": "next dev",
