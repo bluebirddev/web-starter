@@ -1,0 +1,12 @@
+{
+    "editor.formatOnSave": true,
+    "editor.rulers": [120],
+    "editor.tabSize": 2,
+    "editor.codeActionsOnSave": {
+       "source.fixAll.eslint": true
+    },
+    "prettier.tabWidth": 2,
+    "prettier.singleQuote": true,
+    "prettier.printWidth": 120,
+    "prettier.endOfLine": "auto"
+}
