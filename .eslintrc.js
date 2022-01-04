@@ -11,5 +11,6 @@ module.exports = {
         tabWidth: 2,
       },
     ],
+    '@next/next/no-img-element': 0, // enable if server-side rendering
   },
 };
