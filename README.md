@@ -17,14 +17,14 @@ We use the [Typescript](https://www.typescriptlang.org/) language to add types t
 
 Next has the ability to function with a combination of these methodologies.
 
-This starter uses a combination of client-side rendering and static site rendering. (Note, the difference between the 2 is simply the amount of the JavaScript library that is sent to the client. ie. client-side rendering: 100% of the library. static site rendering: 0% of the library.)
+This starter uses a combination of client-side rendering and static site rendering. (Note, the difference between the two is simply the amount of the JavaScript library that is sent to the client. ie. client-side rendering: 100% of the library. static site rendering: 0% of the library.)
 
 ---
 
 The tools that we use:
 
 - [tailwindcss](https://tailwindcss.com/) - Styling
-- [recoil](https://recoiljs.org/) - Local state management
+- [zustand](https://github.com/pmndrs/zustand) - Local state management
 - [React Query](https://react-query.tanstack.com/) - Remote data fetching
 - [Axios](https://github.com/axios/axios) - HTTP client (used with React Query)
 - [ESLint](https://eslint.org/) - Code linting. If using VSCode, make sure [this](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) plugin is installed.

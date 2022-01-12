@@ -2,18 +2,22 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useQuery } from 'react-query';
+import create from 'zustand';
 import clientApi from './client-api';
-import { atom, useRecoilState } from 'recoil';
 
-const localCountState = atom({
-  key: 'localCount',
-  default: 0,
-});
+type CountStore = {
+  count: number;
+  inc: () => void;
+};
+const countStore = create<CountStore>((set) => ({
+  count: 0,
+  inc: () => set((state) => ({ count: state.count + 1 })),
+}));
 
 const Home: NextPage = () => {
   const { isLoading, data } = useQuery('repoData', () => clientApi.get('/users'));
 
-  const [localCount, setLocalCount] = useRecoilState(localCountState);
+  const { count, inc } = countStore();
 
   return (
     <>
@@ -40,13 +44,8 @@ const Home: NextPage = () => {
           <hr />
           <div className="my-2">
             Local count:
-            <span className="mx-2 font-bold">{localCount}</span>
-            <button
-              className="border border-black"
-              onClick={() => {
-                setLocalCount(localCount + 1);
-              }}
-            >
+            <span className="mx-2 font-bold">{count}</span>
+            <button className="border border-black" onClick={inc}>
               ++
             </button>
           </div>
