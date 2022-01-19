@@ -1,9 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useQuery } from 'react-query';
 import create from 'zustand';
-import clientApi from './client-api';
+import { useFindPetsByStatus } from '../api/endpoints';
 
 type CountStore = {
   count: number;
@@ -15,7 +14,9 @@ const countStore = create<CountStore>((set) => ({
 }));
 
 const Home: NextPage = () => {
-  const { isLoading, data } = useQuery('repoData', () => clientApi.get('/users'));
+  const { isLoading, data } = useFindPetsByStatus({
+    status: ['available', 'pending'],
+  });
 
   const { count, inc } = countStore();
 
@@ -39,7 +40,7 @@ const Home: NextPage = () => {
           <div className="my-2">
             <h2>Result of client-side query:</h2>
             {isLoading && <div>Loading...</div>}
-            {data && <div className="p-2 bg-gray-200 text-xs">{JSON.stringify(data, null, 2)}</div>}
+            {data && <div className="p-2 bg-gray-200 text-xs h-64 overflow-auto">{JSON.stringify(data, null, 2)}</div>}
           </div>
           <hr />
           <div className="my-2">
