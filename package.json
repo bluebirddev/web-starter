@@ -37,7 +37,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint pages/*"
+      "eslint ./src/**/*.{js,ts,jsx,tsx}"
     ]
   }
 }
