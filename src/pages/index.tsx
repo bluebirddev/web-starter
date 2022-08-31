@@ -2,6 +2,9 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import create from 'zustand';
+import ClientOnly from '~/ClientOnly';
+import Button from '~/components/Button';
+import { useStore } from '~/store';
 import { useFindPetsByStatus } from '../api/endpoints';
 
 type CountStore = {
@@ -19,6 +22,7 @@ const Home: NextPage = () => {
   });
 
   const { count, inc } = countStore();
+  const { user, setUser, clearUser } = useStore();
 
   return (
     <>
@@ -36,17 +40,47 @@ const Home: NextPage = () => {
               <a className="text-blue-700">Go to a dynamic page</a>
             </Link>
           </p>
+          <div className="my-2">
+            <ClientOnly>
+              {user ? (
+                <div className="space-x-2">
+                  <span>You are logged in</span>
+                  <Link href="/authed">
+                    <a className="text-blue-700">Go to authorized page</a>
+                  </Link>
+                  <Button onClick={() => clearUser()}>Logout</Button>
+                </div>
+              ) : (
+                <div className="space-x-2">
+                  <span>You are not logged in</span>
+                  <Button
+                    onClick={() =>
+                      setUser({
+                        token: '123123',
+                      })
+                    }
+                  >
+                    Login
+                  </Button>
+                </div>
+              )}
+            </ClientOnly>
+          </div>
           <hr />
           <div className="my-2">
             <h2>Result of client-side query:</h2>
             {isLoading && <div>Loading...</div>}
-            {data && <div className="p-2 bg-gray-200 text-xs h-64 overflow-auto">{JSON.stringify(data, null, 2)}</div>}
+            {data && (
+              <div className="p-2 bg-gray-200 text-xs h-64 overflow-auto">
+                {JSON.stringify(data, null, 2)}
+              </div>
+            )}
           </div>
           <hr />
           <div className="my-2">
             Local count:
             <span className="mx-2 font-bold">{count}</span>
-            <button className="border border-black" onClick={inc}>
+            <button type="button" className="border border-black" onClick={inc}>
               ++
             </button>
           </div>

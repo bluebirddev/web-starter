@@ -1,6 +1,33 @@
 import Axios, { AxiosRequestConfig } from 'axios';
+import router from 'next/router';
+import { logout } from '~/auth';
 
-export const AXIOS_INSTANCE = Axios.create({ baseURL: 'https://petstore.swagger.io/v2' });
+/**
+ * This will be utilized by "Orval" as the base HTTP client instance.
+ * ie. if you look at "./endpoints" - it uses this instance.
+ */
+
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+
+const baseURL = API_HOST;
+
+export const AXIOS_INSTANCE = Axios.create({
+  baseURL,
+  headers: {
+    accept: 'application/json',
+  },
+});
+
+AXIOS_INSTANCE.interceptors.response.use(
+  (value) => value,
+  (error) => {
+    if (error?.response?.status === 401) {
+      router.push('/sign-in');
+    } else {
+      return Promise.reject(error);
+    }
+  }
+);
 
 /**
  * Custom serializer to convert array params to return:
@@ -25,13 +52,23 @@ function paramsSerializer(params: Record<string, unknown>): string {
 export const customInstance = <T>(config: AxiosRequestConfig): Promise<T> => {
   const source = Axios.CancelToken.source();
 
-  console.log({ config });
-
   const promise = AXIOS_INSTANCE({
     ...config,
     paramsSerializer,
     cancelToken: source.token,
-  }).then(({ data }) => data);
+  })
+    .then((q) => {
+      if (!q) {
+        logout();
+      }
+      return q?.data;
+    })
+    .catch((error) => {
+      if (error?.message === 'cancelled') {
+        logout();
+      }
+      return Promise.reject(error);
+    });
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore

@@ -29,3 +29,4 @@ The tools that we use:
 - [Axios](https://github.com/axios/axios) - HTTP client (used with React Query)
 - [ESLint](https://eslint.org/) - Code linting. If using VSCode, make sure [this](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) plugin is installed.
 - [Prettier](https://prettier.io/) - Opinionated code formatter.
+- [Storybook](https://storybook.js.org/) - Build and present UI components in isolation.
